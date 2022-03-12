@@ -1,0 +1,12 @@
+name: ManaFlow
+version: '${project.version}'
+main: io.github.ardeon.manaflow.ManaFlow
+
+commands:
+  mana:
+    description: main command
+    usage: /mana <subcommand>
+    permission: io.github.ardeon.manaflow.main
+
+api-version: 1.18
+authors: [ Ardeon ]
