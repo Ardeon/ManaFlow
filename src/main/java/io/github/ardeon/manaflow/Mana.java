@@ -42,6 +42,24 @@ public class Mana {
         return restorePerSecond;
     }
 
+    public synchronized boolean restoreMana(float value, boolean canOverFlow) {
+        if (value < 0)
+            return false;
+        if (current <= max) {
+            value += current;
+            if (canOverFlow)
+                current = value;
+            else {
+                if (current == max)
+                    return false;
+                current = Math.min(max, value);
+            }
+            return true;
+        }
+        else
+            return false;
+    }
+
     public synchronized boolean consume(float value) {
         if (value < 0)
             return false;
@@ -57,7 +75,7 @@ public class Mana {
         return current>max;
     }
 
-    public ManaState calculateTick() {
+    protected ManaState calculateTick() {
         return calculateTick(0);
     }
 
@@ -69,7 +87,7 @@ public class Mana {
         if (max!=0) {
             float value = current / max;
             if (value > 1)
-                return ManaState.OVER_FULL;
+                return ManaState.OVERFLOWING;
             if (value == 1)
                 return ManaState.FULL;
             if (value > 0.8)
@@ -84,7 +102,7 @@ public class Mana {
         return ManaState.EMPTY;
     }
 
-    public synchronized ManaState calculateTick(float amplifier) {
+    protected synchronized ManaState calculateTick(float amplifier) {
         if (isOverFull()) {
             current -= removeOveragePerSecond;
         } else {

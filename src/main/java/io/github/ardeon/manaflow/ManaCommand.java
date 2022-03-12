@@ -1,5 +1,6 @@
 package io.github.ardeon.manaflow;
 
+import io.github.ardeon.manaflow.gui.InventoryManaGUI;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -15,9 +16,12 @@ public class ManaCommand implements CommandExecutor, TabCompleter {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if (!(sender instanceof Player))
             return false;
+        Player player = (Player) sender;
         Mana mana = ManaFlow.getInstance().getMainManaHelper().getMana((Player) sender);
         if (args.length == 0) {
             sender.sendMessage(String.format("Mana: current = %f  max = %f", mana.getCurrent(), mana.getMax()));
+            InventoryManaGUI gui = new InventoryManaGUI(player);
+            player.openInventory(gui.getInventory());
         }
         if (args.length > 0){
             switch (args[0].toUpperCase()){

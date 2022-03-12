@@ -6,5 +6,5 @@ public enum ManaState {
     MEDIUM,
     HIGH,
     FULL,
-    OVER_FULL
+    OVERFLOWING
 }

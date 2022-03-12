@@ -38,7 +38,7 @@ public class ManaHelper {
 
     private void playSoundManaState(Player player, ManaState state){
         Sound sound = Sound.ITEM_BOTTLE_FILL;
-        float pitch = 1;
+        float pitch = 0;
         switch (state){
             case EMPTY:
                 pitch = 1;
@@ -55,7 +55,7 @@ public class ManaHelper {
             case FULL:
                 pitch = 2.1f;
                 break;
-            case OVER_FULL:
+            case OVERFLOWING:
                 pitch = 3.1f;
                 break;
         }
