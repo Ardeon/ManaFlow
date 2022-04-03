@@ -1,5 +1,5 @@
 # About
-Simple mana system plugin
+Simple mana system plugin for paper
 ## How to add to plugin
 plugin.yml
 ```sh

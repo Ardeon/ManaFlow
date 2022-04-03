@@ -4,6 +4,7 @@ import io.github.ardeon.manaflow.ManaFlow;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.event.inventory.InventoryInteractEvent;
 import org.bukkit.inventory.Inventory;
 
@@ -25,6 +26,14 @@ public class GUIEventListener implements Listener {
 
     @EventHandler
     public void guiInteract(InventoryInteractEvent event) {
+        Inventory inv = event.getInventory();
+        if (inv.getHolder() instanceof InventoryManaGUI) {
+            event.setCancelled(true);
+        }
+    }
+
+    @EventHandler
+    public void guiDrag(InventoryDragEvent event) {
         Inventory inv = event.getInventory();
         if (inv.getHolder() instanceof InventoryManaGUI) {
             event.setCancelled(true);
