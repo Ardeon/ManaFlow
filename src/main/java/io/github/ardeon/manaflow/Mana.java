@@ -160,6 +160,13 @@ public class Mana {
         };
     }
 
+    public void disableDisplay(){
+        if (manaDisplay != null){
+            manaDisplay.remove();
+        }
+        manaDisplay = null;
+    }
+
     public void displayMana() {
         if (manaDisplay != null){
             manaDisplay.update(current, max, getState(), currentRestoreDelayInTicks);
