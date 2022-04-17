@@ -9,6 +9,7 @@ import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
@@ -40,7 +41,6 @@ public class InventoryManaGUI implements InventoryHolder {
     private void updateItems(){
         Mana mana = ManaFlow.getInstance().getMainManaHelper().getMana(player);
 
-
         ItemStack item1 = new ItemStack(Material.GLASS_BOTTLE);
         ItemMeta meta1 = Bukkit.getItemFactory().getItemMeta(Material.GLASS_BOTTLE);
         TextComponent textComponent1 = Component.text(String.format("%s : %.2f","Ваша мана",mana.getCurrent()))
@@ -60,14 +60,24 @@ public class InventoryManaGUI implements InventoryHolder {
         meta2.displayName(textComponent2);
         item2.setItemMeta(meta2);
         inv.setItem(2, item2);
+
+        ItemStack item3 = new ItemStack(Material.GLASS_BOTTLE);
+        ItemMeta meta3 = Bukkit.getItemFactory().getItemMeta(Material.GLASS_BOTTLE);
+        TextComponent textComponent3 = Component.text(String.format("%s: %d", "Отображение", mana.getDisplay()))
+                .color(TextColor.color(0x443344))
+                .decoration(TextDecoration.BOLD,true)
+                .decoration(TextDecoration.ITALIC, false);
+        meta3.displayName(textComponent3);
+        item3.setItemMeta(meta3);
+        inv.setItem(3, item3);
     }
 
-    public void click(int i){
+    public void click(int i, ClickType type){
         Mana mana = ManaFlow.getInstance().getMainManaHelper().getMana(player);
-        switch (i){
-            case 1:
-                mana.setCurrent(0);
-                break;
+        switch (i) {
+            case 1 -> mana.setCurrent(0);
+            case 2 -> {if (type.isLeftClick()) { mana.setMax(mana.getMax() + 10); } else {mana.setMax(mana.getMax() - 10);}}
+            case 3 -> {if (type.isLeftClick()) { mana.changeDisplay(1); } else {mana.changeDisplay(0);}}
         }
     }
 

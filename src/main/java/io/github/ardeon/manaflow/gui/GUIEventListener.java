@@ -19,7 +19,7 @@ public class GUIEventListener implements Listener {
         Inventory inv = event.getClickedInventory();
         if (inv!=null && inv.getHolder() instanceof InventoryManaGUI) {
             InventoryManaGUI gui = (InventoryManaGUI) inv.getHolder();
-            gui.click(event.getSlot());
+            gui.click(event.getSlot(), event.getClick());
             event.setCancelled(true);
         }
     }

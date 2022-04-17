@@ -10,10 +10,12 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 
 public class SQLite extends Database{
-    String dbname = "";
+    String dbname;
     File dataFolder;
-    public SQLite(Plugin plugin){
+
+    public SQLite(Plugin plugin, String name){
         super(plugin);
+        dbname = name;
         dataFolder = new File(plugin.getDataFolder(), dbname+".db");
         load();
     }
@@ -21,6 +23,7 @@ public class SQLite extends Database{
     private boolean createFileIfNotExist() {
         if (!dataFolder.exists()){
             try {
+                plugin.getDataFolder().mkdirs();
                 dataFolder.createNewFile();
                 plugin.getLogger().info(String.format("create db %s", dbname));
                 return true;
